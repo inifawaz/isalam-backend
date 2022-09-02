@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->restrictOnDelete();
             $table->foreignId('category_id')->constrained('project_categories')->restrictOnDelete();
             $table->string('name');
+            $table->string('location');
             $table->text('description');
             $table->string('picture_url')->nullable();
             $table->string('instagram_url')->nullable();

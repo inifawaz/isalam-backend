@@ -16,19 +16,19 @@ class ProjectCategorySeeder extends Seeder
     public function run()
     {
         ProjectCategory::create([
-            'category' => 'Umum'
+            'name' => 'Umum'
         ]);
         ProjectCategory::create([
-            'category' => 'Pendidikan'
+            'name' => 'Pendidikan'
         ]);
         ProjectCategory::create([
-            'category' => 'Dakwah'
+            'name' => 'Dakwah'
         ]);
         ProjectCategory::create([
-            'category' => 'Sosial'
+            'name' => 'Sosial'
         ]);
         ProjectCategory::create([
-            'category' => 'Kesehatan'
+            'name' => 'Kesehatan'
         ]);
     }
 }

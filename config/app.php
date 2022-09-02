@@ -154,6 +154,15 @@ return [
     |
     */
 
+    /*
+     * From Onaiza Customization
+     */
+
+    'duitku_api_key' => env('DUITKU_API_KEY'),
+    'duitku_merchant_code' => env('DUITKU_MERCHANT_CODE'),
+    'duitku_callback_url' => env('DUITKU_CALLBACK_URL'),
+    'duitku_return_url' => env('DUITKU_RETURN_URL'),
+
     'providers' => [
 
         /*
@@ -196,6 +205,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Onaiza Custom Provider
+         */
+        App\Providers\DuitkuServiceProvider::class,
+
     ],
 
     /*
@@ -211,6 +225,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'OnaizaDuitku' => App\Helpers\OnaizaDuitku::class,
     ])->toArray(),
 
 ];

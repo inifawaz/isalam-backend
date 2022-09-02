@@ -26,7 +26,7 @@ class UserResource extends JsonResource
             'city' => $this->city,
             'province' => $this->province,
             'zip_code' => $this->zip_code,
-            'avatar_url' => $this->zip_code,
+            'avatar_url' => $this->avatar_url,
         ];
     }
 }

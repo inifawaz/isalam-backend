@@ -20,6 +20,7 @@ class ProjectSeeder extends Seeder
             [
                 'user_id' => 1,
                 'category_id' => 1,
+                "location" => 'Karanganyar',
                 'name' => "Pengadaan Mushaf Al Qur'an Untuk PPTQ Al Qolam Karanganyar",
                 "picture_url" => "wakaf-mushaf.jpeg",
 
