@@ -45,4 +45,35 @@ class Duitku
             'Content-Length: ' . strlen($params_string)
         ])->post($url, $params);
     }
+
+    public function checkPaymentStatus($merchantOrderId)
+    {
+        $merchantCode = $this->merchant_code;
+        $apiKey = $this->api_key;
+
+
+        $signature = md5($merchantCode . $merchantOrderId . $apiKey);
+
+        $params = array(
+            'merchantCode' => $merchantCode,
+            'merchantOrderId' => $merchantOrderId,
+            'signature' => $signature
+        );
+
+        $params_string = json_encode($params);
+        $url = 'https://sandbox.duitku.com/webapi/api/merchant/transactionStatus';
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Content-Length: ' . strlen($params_string)
+        ])->post($url, $params);
+
+        if ($response->successful()) {
+            $result = json_decode($response, true);
+        } else {
+            $result = json_decode($response);
+            return "Server Error: " . $result->Message;
+        }
+        return $result;
+    }
 }

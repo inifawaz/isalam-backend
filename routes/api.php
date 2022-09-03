@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProjectcategoryController;
 use App\Http\Controllers\ProjectController;
@@ -39,6 +40,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/payments', [PaymentController::class, 'createPayment']);
 
     Route::post('/checkpaymentstatus', [PaymentController::class, 'checkPaymentStatus']);
+    Route::get('/payments', [PaymentController::class, 'index']);
+
+    Route::get('/me/projects', [MeController::class, 'getProjects']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
@@ -46,6 +50,4 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
 
     Route::post('/projects', [ProjectController::class, 'store']);
     Route::post('/projects/{project}/updates', [ProjectUpdateController::class, 'store']);
-
-    Route::get('/payments', [PaymentController::class, 'index']);
 });

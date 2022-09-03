@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PaymentItemResource;
 use App\Models\Payment;
 use App\Models\Project;
 use Carbon\Carbon;
@@ -187,36 +188,36 @@ class PaymentController extends Controller
         // return $result;
     }
 
-    public function checkPaymentStatus(Request $request)
-    {
-        $merchantCode = $this->merchant_code;
-        $apiKey = $this->api_key;
-        $merchantOrderId = $request->merchant_order_id;
+    // public function checkPaymentStatus(Request $request)
+    // {
+    //     $merchantCode = $this->merchant_code;
+    //     $apiKey = $this->api_key;
+    //     $merchantOrderId = $request->merchant_order_id;
 
-        $signature = md5($merchantCode . $merchantOrderId . $apiKey);
+    //     $signature = md5($merchantCode . $merchantOrderId . $apiKey);
 
-        $params = array(
-            'merchantCode' => $merchantCode,
-            'merchantOrderId' => $merchantOrderId,
-            'signature' => $signature
-        );
+    //     $params = array(
+    //         'merchantCode' => $merchantCode,
+    //         'merchantOrderId' => $merchantOrderId,
+    //         'signature' => $signature
+    //     );
 
-        $params_string = json_encode($params);
-        $url = 'https://sandbox.duitku.com/webapi/api/merchant/transactionStatus';
+    //     $params_string = json_encode($params);
+    //     $url = 'https://sandbox.duitku.com/webapi/api/merchant/transactionStatus';
 
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'Content-Length: ' . strlen($params_string)
-        ])->post($url, $params);
+    //     $response = Http::withHeaders([
+    //         'Content-Type' => 'application/json',
+    //         'Content-Length: ' . strlen($params_string)
+    //     ])->post($url, $params);
 
-        if ($response->successful()) {
-            $result = json_decode($response, true);
-        } else {
-            $result = json_decode($response);
-            return "Server Error: " . $result->Message;
-        }
-        return $result;
-    }
+    //     if ($response->successful()) {
+    //         $result = json_decode($response, true);
+    //     } else {
+    //         $result = json_decode($response);
+    //         return "Server Error: " . $result->Message;
+    //     }
+    //     return $result;
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -224,10 +225,17 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = Payment::all();
-        return response(
-            $payments
-        );
+        if (Auth::user()->getRoleNames()[0] === 'admin') {
+            $payments = Payment::all();
+            return response(
+                $payments
+            );
+        } else {
+            $payments = Payment::where('user_id', '=', Auth::user()->id)->get();
+            return response(
+                PaymentItemResource::collection($payments)
+            );
+        }
     }
 
     /**

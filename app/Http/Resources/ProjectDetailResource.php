@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Models\Payment;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProjectDetailResource extends JsonResource
@@ -34,7 +35,8 @@ class ProjectDetailResource extends JsonResource
             $backers[] = [
                 "name" => $user->full_name,
                 "project_amount_given" => $payment->project_amount_given,
-                "created_at" => $payment->created_at
+                "paid_at" => Carbon::parse($payment->created_at)->diffForHumans()
+
             ];
         }
 
