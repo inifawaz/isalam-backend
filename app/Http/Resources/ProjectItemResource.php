@@ -29,7 +29,8 @@ class ProjectItemResource extends JsonResource
             "target_amount" => $this->target_amount,
             "days_left" => now()->diffInDays($this->end_date),
             "amount_collected" => $amount_collected,
-            "amount_collected_percent" => $amount_collected_percent,
+            "amount_collected_percent" => floor($amount_collected_percent) . '%',
+            "amount_collected_percent_tw" => 'w-[' . floor($amount_collected_percent) . '%' . ']',
             "backers_count" => $payments->count() ?? 0,
             'picture_url' => asset('assets/img/projects/pictures') . '/' . $this->picture_url,
         ];

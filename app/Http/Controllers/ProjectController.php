@@ -48,6 +48,7 @@ class ProjectController extends Controller
         $project->category_id = 1;
         $project->name = $request->name;
         $project->description = $request->description;
+        $project->location = $request->location;
 
         if ($request->file('picture_url')) {
             $file = $request->file('picture_url');

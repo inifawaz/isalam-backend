@@ -75,7 +75,8 @@ class ProjectDetailResource extends JsonResource
             "maintenance_fee" => $this->maintenance_fee,
             "target_amount" => $this->target_amount,
             "amount_collected" => $amount_collected,
-            "amount_collected_percent" => $amount_collected_percent,
+            "amount_collected_percent_tw" => 'w-[' . floor($amount_collected_percent) . '%' . ']',
+            "amount_collected_percent" => floor($amount_collected_percent) . '%',
             "choice_amount" => $choice_amount,
             "days_left" => now()->diffInDays($this->end_date),
 

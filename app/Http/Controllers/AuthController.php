@@ -56,4 +56,27 @@ class AuthController extends Controller
             'token' => $user->createToken('token')->plainTextToken
         ], 201);
     }
+
+    public function update(Request $request)
+    {
+        $user = User::where('id', '=', Auth::user()->id)->first();
+        $user->full_name = $request->full_name;
+        $user->address = $request->address;
+        $user->village = $request->village;
+        $user->district = $request->district;
+        $user->city = $request->city;
+        $user->province = $request->province;
+        $user->zip_code = $request->zip_code;
+        $user->phone_number = $request->phone_number;
+        $user->email = $request->email;
+        if ($request->new_password != '') {
+            $user->password = Hash::make($request->new_password);
+        }
+        $user->update();
+
+        return response([
+            'message' => 'data profile anda berhasil diupdate',
+            'user' => $user
+        ], 202);
+    }
 }

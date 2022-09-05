@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssetController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MeController;
 use App\Http\Controllers\PaymentController;
@@ -35,6 +36,7 @@ Route::post('/transactions', [TransactionController::class, 'store']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
+    Route::put('/me', [AuthController::class, 'update']);
 
     Route::post('/getpaymentmethod', [PaymentController::class, 'getPaymentMethod']);
     Route::post('/payments', [PaymentController::class, 'createPayment']);
@@ -43,6 +45,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/payments', [PaymentController::class, 'index']);
 
     Route::get('/me/projects', [MeController::class, 'getProjects']);
+
+    Route::post('/assets/img/projects/content', [AssetController::class, 'uploadImageProjectContent']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
